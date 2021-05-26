@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   serverURL: 'https://localhost:44345/',
+  signalR: 'https://localhost:44345/hubs', // TEST SignalR
 };
 
 /*

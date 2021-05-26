@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {SignalRService} from "../../services/signal-rservice.service"
 import { createTicketDTO } from '../../core/DTOs/createTicketDTO';
 import { getTicketDTO } from '../../core/DTOs/getTicketDTO';
 import {
@@ -48,6 +49,7 @@ export class CreateTicketPopupComponent implements OnInit {
   createTabsStatus: any;
   constructor(
     private formBuilder: FormBuilder,
+    private signalRService: SignalRService,
     private http: HTTPMainServiceService,
     public dialog: MatDialog,
     public service: TicketCreationService,
@@ -60,6 +62,11 @@ export class CreateTicketPopupComponent implements OnInit {
     this.fromPage = data ? data.pageValue : undefined;
     this.updateStatus = tabs.getTabValue();
     this.createTabsStatus = tabs.getTabValue();
+    this.signalRService.startConnection();
+    this.signalRService.changeNotificationCount(this, this.updateNotification);
+  }
+  updateNotification(){
+    
   }
   private FileLinks = [];
   showSecondCategory: boolean = false;

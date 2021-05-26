@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { createTicketDTO } from '../../core/DTOs/createTicketDTO';
 import { getTicketDTO } from '../../core/DTOs/getTicketDTO';
+import {SignalRService} from "../../services/signal-rservice.service"
 import {
   PriorityEnum,
   SevirityEnum,
@@ -53,6 +54,7 @@ export class CreateTicketPopupComponent implements OnInit {
     public service: TicketCreationService,
     private share: SharingdataService,
     private tabs: TabscreationService,
+    private signalRService: SignalRService,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CreateTicketPopupComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
@@ -60,6 +62,11 @@ export class CreateTicketPopupComponent implements OnInit {
     this.fromPage = data ? data.pageValue : undefined;
     this.updateStatus = tabs.getTabValue();
     this.createTabsStatus = tabs.getTabValue();
+    this.signalRService.startConnection();
+    this.signalRService.changeNotificationCount(this, this.updateNotification);
+  }
+  updateNotification(){
+    
   }
   private FileLinks = [];
   showSecondCategory: boolean = false;
@@ -270,7 +277,7 @@ export class CreateTicketPopupComponent implements OnInit {
       this.createTicketDTOFormGroup.value.productCategoryName1.toString();
     this.createTicketDTO.productCategoryName2 =
       this.createTicketDTOFormGroup.value.productCategoryName2.toString();
-    let submitterArray =
+      let submitterArray =
       this.createTicketDTOFormGroup.value.reporter.split(',');
     this.createTicketDTO.submitterTeam = submitterArray[0];
     this.createTicketDTO.submitterEmail = submitterArray[1];
