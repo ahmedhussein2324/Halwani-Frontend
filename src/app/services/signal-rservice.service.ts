@@ -11,7 +11,7 @@ export class SignalRService {
 
   constructor() { }
 
-  public startConnection = () => {
+  public startConnection = () => { 
     debugger;
     const options: IHttpConnectionOptions = {
       accessTokenFactory() {
